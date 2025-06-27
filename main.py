@@ -21,6 +21,6 @@ def extract_pdf_text():
             text = "\n".join(page.extract_text() or "" for page in pdf.pages)
 
         return jsonify({"text": text.strip()})
-    except Exception as e:
+        except Exception as e:
+        print("🚨 ERROR:", str(e))  # 👈 This will show up in Render logs
         return jsonify({"error": str(e)}), 500
-
