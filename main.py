@@ -21,6 +21,6 @@ def extract_pdf_text():
             text = "\n".join(page.extract_text() or "" for page in pdf.pages)
 
         return jsonify({"text": text.strip()})
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
