@@ -14,13 +14,16 @@ def extract_pdf_text():
         return jsonify({"error": "Missing 'pdf_url' field"}), 400
 
     try:
+        # Download the PDF
         response = requests.get(pdf_url)
         response.raise_for_status()
 
+        # Extract text
         with pdfplumber.open(BytesIO(response.content)) as pdf:
             text = "\n".join(page.extract_text() or "" for page in pdf.pages)
 
         return jsonify({"text": text.strip()})
-        except Exception as e:
-        print("🚨 ERROR:", str(e))  # 👈 This will show up in Render logs
+
+    except Exception as e:
+        print("🚨 ERROR:", str(e))  # This will show in Render logs
         return jsonify({"error": str(e)}), 500
